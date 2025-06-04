@@ -84,13 +84,37 @@ public class Board {
         board[6][7]=pawnb8;
 
     }
-    
+
+    public Board(Board other) {
+        this.row = other.row;
+        this.col = other.col;
+        this.board = new Piece[row][col];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                Piece originalPiece = other.board[i][j];
+                if (originalPiece != null) {
+                    this.board[i][j] = new Piece(
+                        originalPiece.getName(),
+                        originalPiece.getColor(),
+                        originalPiece.getRow(),
+                        originalPiece.getCol()
+                    );
+                } else {
+                    this.board[i][j] = null;
+                }
+            }
+        }
+    }
+ 
     public Piece[][] getBoard() {
         return board;
     }
+    
     public Piece getPiece(int row, int col) {
         return board[row][col];
     }
+    
     public void setPiece(int row, int col, Piece piece) {
         if(piece!=null){
             board[piece.getRow()][piece.getCol()] = null;

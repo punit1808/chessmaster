@@ -14,6 +14,7 @@ import com.chessmaster.chessmaster.Model.Board;
 import com.chessmaster.chessmaster.Model.Piece;
 import com.chessmaster.chessmaster.Model.User;
 import com.chessmaster.chessmaster.Service.ChessService;
+import com.chessmaster.chessmaster.Model.BoolResponse;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -71,6 +72,29 @@ public class chessController {
     @GetMapping("/turn")
     public String getTurn(){
         return this.chessService.getTurn();
+    }
+
+    @GetMapping("/isSafe")
+    public ResponseEntity<BoolResponse> isSafe(){
+        BoolResponse res=this.chessService.isSafe(this.getCurrentState().getBoard());
+
+        if(res.getRes()){
+            return ResponseEntity.ok(res);
+        }
+        else{
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/Win")
+    public ResponseEntity<BoolResponse> isWin(){
+        BoolResponse res=this.chessService.isWin();
+
+        if(res.getRes()){
+            return ResponseEntity.ok(res);
+         }
+         else{
+           return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);}
     }
 
 }
